@@ -13,48 +13,58 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(to bottom, purple, #eb32d8);
+  background: linear-gradient(to bottom, rgb(16, 16, 49), #9d8ae4);
 }
 
 button:hover {
   cursor: pointer;
 }
 
+/* app-container styling ( Contains all components) */
+
 .app-container {
   height: 800px;
-  width: 700px;
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
+  width: 800px;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(20px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-/* Searchbar styling */
+/* searchbar-container styling (Contains SearcBar and TemperatureConverter components) */
 
 .searchbar-container {
   display: flex;
   justify-content: center;
+}
+
+/* Searchbar Component styling */
+
+.searchbar-wrapper {
+  display: flex;
+  justify-content: center;
   gap: 1rem;
+  flex-basis: 80%;
   align-items: center;
 }
 
 .searchbar {
-  width: 60%;
+  width: 70%;
   padding: 10px;
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
-}
-
-.searchbar:focus {
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  outline: none;
+  font-size: 1.2rem;
 }
 
 .searchbar::placeholder {
@@ -64,11 +74,113 @@ button:hover {
   padding-left: 1rem;
 }
 
+.searchbar:focus {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  outline: none;
+}
+
 .searchbar-btn {
   font-size: 2rem;
+  color: black;
+  font-weight: 500;
 }
 
 .searchbar-btn:hover {
   cursor: pointer;
   transform: scale(1.2);
+}
+
+/* TemperatureConverter component styling*/
+
+.temperature-converter-wrapper {
+  display: flex;
+  flex-basis: 20%;
+  gap: 1rem;
+  justify-content: start;
+}
+
+.separator,
+.celsius,
+.fahrenheit {
+  color: black;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.celsius:hover,
+.fahrenheit:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+/* LocalTime Component styling */
+
+.local-time {
+  display: flex;
+  justify-content: center;
+  color: black;
+  font-size: 1.7rem;
+  font-weight: 500;
+}
+
+/* CurrentTemperature Component styling */
+
+.temperature-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  /* gap: 0.7rem; */
+}
+
+.temperature-container img {
+  display: flex;
+  width: 50%;
+  height: 50%;
+}
+
+.current-temperature {
+  color: black;
+  font-size: 5rem;
+}
+
+.city-wrapper {
+  display: flex;
+  align-items: center;
+  color: black;
+  font-size: 3rem;
+}
+
+/* wind-humidity-container styling  (Contains Wind and Humidity Components) */
+
+.wind-humidity-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Wind/Humidity Components styling */
+
+.wind-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.humidity-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.wind-speed,
+.humidity-percentage {
+  font-size: 2.5rem;
+  font-weight: 500;
+}
+
+.wind-icon {
+  font-size: 4rem;
+}
+
+.humidity-wrapper img {
+  width: 120px;
 }
