@@ -1,38 +1,74 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html {
+  scroll-behavior: smooth;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to bottom, purple, #eb32d8);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+button:hover {
+  cursor: pointer;
+}
+
+.app-container {
+  height: 800px;
+  width: 700px;
   display: flex;
   flex-direction: column;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+/* Searchbar styling */
+
+.searchbar-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+}
+
+.searchbar {
+  width: 60%;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  font-size: 1.1rem;
 }
 
-.App-link {
-  color: #61dafb;
+.searchbar:focus {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  outline: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.searchbar::placeholder {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: black;
+  padding-left: 1rem;
+}
+
+.searchbar-btn {
+  font-size: 2rem;
+}
+
+.searchbar-btn:hover {
+  cursor: pointer;
+  transform: scale(1.2);
 }
