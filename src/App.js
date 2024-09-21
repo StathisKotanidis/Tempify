@@ -29,7 +29,9 @@ export default function App() {
   const [enableApi, setEnableApi] = useState(false);
   const [apiData, setApiData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [toFahrenheit, setToFahrenheit] = useState(false);
 
+  const celsiusToFahrenheit = Math.round((9 / 5) * apiData?.main?.temp + 32);
   const weatherCondition = apiData?.weather?.[0]?.main || "Clear";
 
   function handleCityName(e) {
@@ -47,6 +49,10 @@ export default function App() {
   function handleSearchIcon() {
     handleEnableApi();
     handleToggleUi();
+  }
+
+  function handleToFahrenheit() {
+    setToFahrenheit(!toFahrenheit);
   }
 
   useEffect(() => {
@@ -76,6 +82,8 @@ export default function App() {
     setEnableApi(false);
   }, [enableApi, cityName]); // Dependency array to re-trigger on enableApi or cityName change
 
+  console.log(celsiusToFahrenheit);
+
   return (
     <div
       className="app-container"
@@ -90,7 +98,7 @@ export default function App() {
           onCityName={handleCityName}
           onSearchIcon={handleSearchIcon}
         />
-        <TemperatureConverter />
+        <TemperatureConverter onFahrenheit={handleToFahrenheit} />
       </div>
       {isLoading ? (
         <Loader />
@@ -101,6 +109,8 @@ export default function App() {
             toggleUi={toggleUi}
             apiData={apiData}
             cityName={cityName}
+            toFahrenheit={toFahrenheit}
+            celsiusToFahrenheit={celsiusToFahrenheit}
           />
           <div className="wind-humidity-container">
             <Humidity toggleUi={toggleUi} apiData={apiData} />
@@ -125,12 +135,16 @@ function SearchBar({ onCityName, onSearchIcon }) {
   );
 }
 
-function TemperatureConverter() {
+function TemperatureConverter({ onFahrenheit }) {
   return (
     <p className="temperature-converter-wrapper">
-      <span className="celsius">°C</span>
+      <span onClick={onFahrenheit} className="celsius">
+        °C
+      </span>
       <span className="separator">|</span>
-      <span className="fahrenheit">°F</span>
+      <span onClick={onFahrenheit} className="fahrenheit">
+        °F
+      </span>
     </p>
   );
 }
@@ -143,7 +157,13 @@ function LocalTime({ toggleUi }) {
   ) : null;
 }
 
-function CurrentTemperature({ toggleUi, apiData, cityName }) {
+function CurrentTemperature({
+  toggleUi,
+  apiData,
+  cityName,
+  toFahrenheit,
+  celsiusToFahrenheit,
+}) {
   return toggleUi ? (
     <div className="temperature-container">
       <img
@@ -155,8 +175,9 @@ function CurrentTemperature({ toggleUi, apiData, cityName }) {
         alt={apiData?.weather?.[0]?.description}
       ></img>
       <span className="current-temperature">
-        {apiData?.main?.temp ? Math.round(apiData.main.temp) : 25}
-        °C
+        {!toFahrenheit && apiData?.main?.temp
+          ? `${Math.round(apiData.main.temp)}°C`
+          : `${celsiusToFahrenheit} °F`}
       </span>
       <span className="city-wrapper">
         <i className="bx bx-current-location"></i>
