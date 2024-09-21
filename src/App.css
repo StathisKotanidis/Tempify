@@ -30,7 +30,7 @@ button:hover {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   display: flex;
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
   flex-direction: column;
   gap: 1rem;
   padding: 1rem 2rem;
@@ -130,7 +130,6 @@ button:hover {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  /* gap: 0.7rem; */
 }
 
 .temperature-container img {
