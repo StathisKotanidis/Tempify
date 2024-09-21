@@ -92,16 +92,22 @@ export default function App() {
         />
         <TemperatureConverter />
       </div>
-      <LocalTime toggleUi={toggleUi} />
-      <CurrentTemperature
-        toggleUi={toggleUi}
-        apiData={apiData}
-        cityName={cityName}
-      />
-      <div className="wind-humidity-container">
-        <Humidity toggleUi={toggleUi} apiData={apiData} />
-        <Wind toggleUi={toggleUi} apiData={apiData} />
-      </div>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className="main-container">
+          <LocalTime toggleUi={toggleUi} />
+          <CurrentTemperature
+            toggleUi={toggleUi}
+            apiData={apiData}
+            cityName={cityName}
+          />
+          <div className="wind-humidity-container">
+            <Humidity toggleUi={toggleUi} apiData={apiData} />
+            <Wind toggleUi={toggleUi} apiData={apiData} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -131,9 +137,9 @@ function TemperatureConverter() {
 
 function LocalTime({ toggleUi }) {
   return toggleUi ? (
-    <p className="local-time">
-      Friday, 20 September 2024 | Local time: 15:43 PM
-    </p>
+    <div className="local-time">
+      <p>Friday, 20 September 2024 | Local time: 15:43 PM</p>
+    </div>
   ) : null;
 }
 
@@ -184,8 +190,8 @@ function Humidity({ toggleUi, apiData }) {
 
 function Loader() {
   return (
-    <p>
-      <i class="bx bx-loader bx-spin bx-flip-horizontal"></i>
+    <p className="loading">
+      <i className="bx bx-loader bx-spin bx-flip-horizontal "></i>
     </p>
   );
 }
