@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import "./App.css";
 import { useState } from "react";
+import React from "react";
 
 const apiKey = "20ff8e16ee4a79b95bc295e19a5bf2d1";
 
@@ -30,12 +31,18 @@ export default function App() {
   const [apiData, setApiData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [toFahrenheit, setToFahrenheit] = useState(false);
+  const [error, setError] = useState("");
 
   const celsiusToFahrenheit = Math.round((9 / 5) * apiData?.main?.temp + 32);
   const weatherCondition = apiData?.weather?.[0]?.main || "Clear";
 
   function handleCityName(e) {
-    setCityName(e.target.value);
+    const input = e.target.value;
+    setCityName(input);
+
+    if (input.length === 0) {
+      setToggleUi(false);
+    }
   }
 
   function handleEnableApi() {
@@ -47,16 +54,21 @@ export default function App() {
   }
 
   function handleSearchIcon() {
+    setError(""); // NEW
     handleEnableApi();
     handleToggleUi();
   }
 
   function handleToFahrenheit() {
-    setToFahrenheit(!toFahrenheit);
+    setToFahrenheit(true);
+  }
+
+  function handleCelsius() {
+    setToFahrenheit(false);
   }
 
   useEffect(() => {
-    if (!enableApi) return; // only fetch if enable api is true
+    if (!enableApi) return;
 
     async function getWeather() {
       try {
@@ -65,24 +77,24 @@ export default function App() {
           `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric`
         );
 
-        if (!res.ok)
-          throw new Error("Something went wrong with fetching the weather");
+        if (!res.ok) throw new Error("City not found :( ");
 
         const data = await res.json();
         setApiData(data);
-
-        console.log(data);
+        setError(""); // NEW
 
         setIsLoading(false);
       } catch (error) {
-        console.error(error);
+        setError(error.message); // Set error message NEW
+        setApiData({}); // Clear previous API data on error NEW
+      } finally {
+        setIsLoading(false); // Stop loading regardless of success or failure NEW
+        setEnableApi(false); // Reset API trigger NEW
       }
     }
     getWeather();
     setEnableApi(false);
   }, [enableApi, cityName]); // Dependency array to re-trigger on enableApi or cityName change
-
-  console.log(celsiusToFahrenheit);
 
   return (
     <div
@@ -98,10 +110,15 @@ export default function App() {
           onCityName={handleCityName}
           onSearchIcon={handleSearchIcon}
         />
-        <TemperatureConverter onFahrenheit={handleToFahrenheit} />
+        <TemperatureConverter
+          onFahrenheit={handleToFahrenheit}
+          onCelsius={handleCelsius}
+        />
       </div>
       {isLoading ? (
         <Loader />
+      ) : error ? (
+        <p className="error">{error}</p>
       ) : (
         <div className="main-container">
           <LocalTime toggleUi={toggleUi} />
@@ -135,10 +152,10 @@ function SearchBar({ onCityName, onSearchIcon }) {
   );
 }
 
-function TemperatureConverter({ onFahrenheit }) {
+function TemperatureConverter({ onFahrenheit, onCelsius }) {
   return (
     <p className="temperature-converter-wrapper">
-      <span onClick={onFahrenheit} className="celsius">
+      <span onClick={onCelsius} className="celsius">
         °C
       </span>
       <span className="separator">|</span>
@@ -150,9 +167,14 @@ function TemperatureConverter({ onFahrenheit }) {
 }
 
 function LocalTime({ toggleUi }) {
+  function getLocalTime() {
+    let localTime = new Date();
+    return localTime.toLocaleString();
+  }
+
   return toggleUi ? (
     <div className="local-time">
-      <p>Friday, 20 September 2024 | Local time: 15:43 PM</p>
+      <p>{getLocalTime()}</p>
     </div>
   ) : null;
 }
@@ -181,7 +203,7 @@ function CurrentTemperature({
       </span>
       <span className="city-wrapper">
         <i className="bx bx-current-location"></i>
-        <span className="city">{cityName}</span>
+        <span className="city">{`${cityName},${apiData?.sys?.country}`}</span>
       </span>
     </div>
   ) : null;

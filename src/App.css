@@ -202,4 +202,15 @@ button:hover {
   align-items: center;
   font-size: 6rem;
   flex-basis: 90%;
+  color: black;
+}
+
+/* Error message styling */
+
+.error {
+  font-size: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-basis: 90%;
 }
