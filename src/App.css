@@ -15,7 +15,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(to bottom, rgb(16, 16, 49), #9d8ae4);
+  background: linear-gradient(to bottom, rgb(0, 0, 0), #b8b3c9);
 }
 
 button:hover {
