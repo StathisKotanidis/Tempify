@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import "./App.css";
 import { useState } from "react";
+import "./App.css";
 import React from "react";
 
 const apiKey = "20ff8e16ee4a79b95bc295e19a5bf2d1";
@@ -33,7 +33,7 @@ export default function App() {
   const [toFahrenheit, setToFahrenheit] = useState(false);
   const [error, setError] = useState("");
 
-  const celsiusToFahrenheit = Math.round((9 / 5) * apiData?.main?.temp + 32);
+  const fahrenheit = Math.round((9 / 5) * apiData?.main?.temp + 32);
   const weatherCondition = apiData?.weather?.[0]?.main || "Clear";
 
   function handleCityName(e) {
@@ -54,7 +54,7 @@ export default function App() {
   }
 
   function handleSearchIcon() {
-    setError(""); // NEW
+    setError("");
     handleEnableApi();
     handleToggleUi();
   }
@@ -81,20 +81,17 @@ export default function App() {
 
         const data = await res.json();
         setApiData(data);
-        setError(""); // NEW
-
-        setIsLoading(false);
+        setError("");
       } catch (error) {
-        setError(error.message); // Set error message NEW
-        setApiData({}); // Clear previous API data on error NEW
+        setError(error.message);
+        setApiData({});
       } finally {
-        setIsLoading(false); // Stop loading regardless of success or failure NEW
-        setEnableApi(false); // Reset API trigger NEW
+        setIsLoading(false);
+        setEnableApi(false);
       }
     }
     getWeather();
-    setEnableApi(false);
-  }, [enableApi, cityName]); // Dependency array to re-trigger on enableApi or cityName change
+  }, [enableApi, cityName]);
 
   return (
     <div
@@ -122,13 +119,16 @@ export default function App() {
       ) : (
         <div className="main-container">
           <LocalTime toggleUi={toggleUi} />
-          <CurrentTemperature
-            toggleUi={toggleUi}
-            apiData={apiData}
-            cityName={cityName}
-            toFahrenheit={toFahrenheit}
-            celsiusToFahrenheit={celsiusToFahrenheit}
-          />
+          <div className="main-info">
+            <WeatherIcon apiData={apiData} toggleUi={toggleUi} />
+            <Temperature
+              apiData={apiData}
+              toggleUi={toggleUi}
+              fahrenheit={fahrenheit}
+              toFahrenheit={toFahrenheit}
+            />
+            <City apiData={apiData} toggleUi={toggleUi} cityName={cityName} />
+          </div>
           <div className="wind-humidity-container">
             <Humidity toggleUi={toggleUi} apiData={apiData} />
             <Wind toggleUi={toggleUi} apiData={apiData} />
@@ -179,33 +179,34 @@ function LocalTime({ toggleUi }) {
   ) : null;
 }
 
-function CurrentTemperature({
-  toggleUi,
-  apiData,
-  cityName,
-  toFahrenheit,
-  celsiusToFahrenheit,
-}) {
+function WeatherIcon({ apiData, toggleUi }) {
+  const icon = apiData?.weather?.[0].icon;
+
   return toggleUi ? (
-    <div className="temperature-container">
-      <img
-        src={
-          apiData?.weather?.[0]?.icon
-            ? `http://openweathermap.org/img/wn/${apiData?.weather[0]?.icon}@2x.png`
-            : ""
-        }
-        alt={apiData?.weather?.[0]?.description}
-      ></img>
-      <span className="current-temperature">
-        {!toFahrenheit && apiData?.main?.temp
-          ? `${Math.round(apiData.main.temp)}°C`
-          : `${celsiusToFahrenheit} °F`}
-      </span>
-      <span className="city-wrapper">
-        <i className="bx bx-current-location"></i>
-        <span className="city">{`${cityName},${apiData?.sys?.country}`}</span>
-      </span>
-    </div>
+    <img
+      src={icon ? `http://openweathermap.org/img/wn/${icon}@2x.png` : ""}
+      alt={apiData?.weather?.[0]?.description || "Weather Icon"}
+    ></img>
+  ) : null;
+}
+
+function Temperature({ apiData, toggleUi, toFahrenheit, fahrenheit }) {
+  const celsius = Math.round(apiData?.main?.temp);
+  return toggleUi ? (
+    <span className="current-temperature">
+      {!toFahrenheit && apiData?.main?.temp
+        ? `${celsius}°C`
+        : `${fahrenheit} °F`}
+    </span>
+  ) : null;
+}
+
+function City({ apiData, cityName, toggleUi }) {
+  return toggleUi ? (
+    <span className="city-wrapper">
+      <i className="bx bx-current-location"></i>
+      <span className="city">{`${cityName},${apiData?.sys?.country}`}</span>
+    </span>
   ) : null;
 }
 

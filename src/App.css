@@ -1,3 +1,5 @@
+/* General Styling */
+
 * {
   margin: 0;
   padding: 0;
@@ -91,7 +93,7 @@ button:hover {
   transform: scale(1.2);
 }
 
-/* TemperatureConverter component styling*/
+/* TemperatureConverter Component styling*/
 
 .temperature-converter-wrapper {
   display: flex;
@@ -132,26 +134,30 @@ button:hover {
   flex-basis: 10%;
 }
 
-/* CurrentTemperature Component styling */
+/* Main-info container styling */
 
-.temperature-container {
+.main-info {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex-basis: 70%;
 }
 
-.temperature-container img {
+/* WeatherIcon Componennt Styling */
+
+.main-info img {
   display: flex;
   width: 50%;
   height: 50%;
 }
 
+/* Temperature Component styling */
 .current-temperature {
   color: black;
   font-size: 6rem;
 }
 
+/* City Component styling */
 .city-wrapper {
   display: flex;
   align-items: center;
