@@ -8,11 +8,10 @@ Tempify is a dynamic weather application that provides real-time weather data fo
 
 ## How It's Made:
 
-**Tech Used**: React, Context API, CSS Modules, Fetch API, HTML, Responsive Design
+**Tech Used**: React, , CSS , Fetch API, HTML, Responsive Design
 
 Tempify is built entirely with React to create a smooth, responsive, and interactive weather experience. The app leverages the Fetch API to retrieve up-to-date weather information and uses conditional rendering to dynamically change the background based on the current weather conditions.
 
-- **Context API** is used for state management, ensuring that weather data and user-selected settings (like units for temperature) are easily accessible across components.
 - **Dynamic Backgrounds**: Tempify stands out by showing animated GIF backgrounds that match the weather conditions (e.g., rain, snow, tornado), making it visually engaging and interactive.
 - **Responsive Design**: The app is optimized for various screen sizes, offering a seamless experience on mobile, tablet, and desktop.
 
@@ -42,12 +41,12 @@ Looking ahead, a few improvements can enhance Tempify even further:
 
 ## Lessons Learned:
 
-Working on Tempify allowed me to enhance my React skills, particularly with Context API and responsive design techniques. Implementing dynamic backgrounds with animated GIFs taught me to manage media assets effectively and improve user experience by tailoring visuals to real-time data. Working with an external API reinforced the importance of handling asynchronous data fetching and providing a smooth, error-free user experience.
+Working on Tempify allowed me to enhance my React skills and responsive design techniques. Implementing dynamic backgrounds with animated GIFs taught me to manage media assets effectively and improve user experience by tailoring visuals to real-time data. Working with an external API reinforced the importance of handling asynchronous data fetching and providing a smooth, error-free user experience.
 
 ---
 
 ## More Projects:
 
-- **QuizWiz** - Interactive quiz application built with React and Trivia API.
-- **IP-Atlas** - A geographic IP lookup tool that visualizes IP locations on a map.
-- **NASA APP** - Displays NASA's Astronomy Picture of the Day along with additional space-related data.
+- **QuizWiz** 
+- **IP-Atlas** 
+- **NASA APP** 
