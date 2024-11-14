@@ -102,24 +102,16 @@ export default function App() {
         })`,
       }}
     >
-      <div className="searchbar-container">
-        <SearchBar
-          onCityName={handleCityName}
-          onSearchIcon={handleSearchIcon}
-        />
-        <TemperatureConverter
-          onFahrenheit={handleToFahrenheit}
-          onCelsius={handleCelsius}
-        />
-      </div>
+      <SearchBar onCityName={handleCityName} onSearchIcon={handleSearchIcon} />
+
       {isLoading ? (
         <Loader />
       ) : error ? (
         <p className="error">{error}</p>
       ) : (
-        <div className="main-container">
-          <LocalTime toggleUi={toggleUi} />
+        <>
           <div className="main-info">
+            <LocalTime toggleUi={toggleUi} />
             <WeatherIcon apiData={apiData} toggleUi={toggleUi} />
             <Temperature
               apiData={apiData}
@@ -127,13 +119,18 @@ export default function App() {
               fahrenheit={fahrenheit}
               toFahrenheit={toFahrenheit}
             />
+            <TemperatureConverter
+              onFahrenheit={handleToFahrenheit}
+              onCelsius={handleCelsius}
+              toggleUi={toggleUi}
+            />
             <City apiData={apiData} toggleUi={toggleUi} cityName={cityName} />
           </div>
           <div className="wind-humidity-container">
             <Humidity toggleUi={toggleUi} apiData={apiData} />
             <Wind toggleUi={toggleUi} apiData={apiData} />
           </div>
-        </div>
+        </>
       )}
     </div>
   );
@@ -152,8 +149,8 @@ function SearchBar({ onCityName, onSearchIcon }) {
   );
 }
 
-function TemperatureConverter({ onFahrenheit, onCelsius }) {
-  return (
+function TemperatureConverter({ onFahrenheit, onCelsius, toggleUi }) {
+  return toggleUi ? (
     <p className="temperature-converter-wrapper">
       <span onClick={onCelsius} className="celsius">
         °C
@@ -163,7 +160,7 @@ function TemperatureConverter({ onFahrenheit, onCelsius }) {
         °F
       </span>
     </p>
-  );
+  ) : null;
 }
 
 function LocalTime({ toggleUi }) {
