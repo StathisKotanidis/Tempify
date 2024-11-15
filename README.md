@@ -2,7 +2,9 @@
 
 Tempify is a dynamic weather application that provides real-time weather data for cities worldwide. Built with React, Tempify offers an immersive experience by displaying animated background GIFs that match the current weather conditions, making it more visually engaging than traditional weather apps. Whether it’s raining, snowing, or sunny, Tempify sets the mood with a tailored background that enhances the user experience.
 
-**Link to Project**: [Tempify Live App](#) <!-- Replace with the actual link -->
+
+
+**Tempify Live App**: https://tempify-weather-app.netlify.app/
 
 ---
 
